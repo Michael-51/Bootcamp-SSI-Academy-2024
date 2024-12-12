@@ -1,0 +1,81 @@
+dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'E-commerce App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ProductListScreen(),
+    );
+  }
+}
+
+
+class Product {
+  final String name;
+  final String imageUrl;
+  final double price;
+
+  Product({required this.name, required this.imageUrl, required this.price});
+}
+
+class ProductListScreen extends StatefulWidget {
+  @override
+  _ProductListScreenState createState() => _ProductListScreenState();
+}
+
+class _ProductListScreenState extends State<ProductListScreen> {
+  List<Product> products = [
+    Product(
+        name: 'Product 1',
+        imageUrl: 'https://via.placeholder.com/150',
+        price: 19.99),
+    Product(
+        name: 'Product 2',
+        imageUrl: 'https://via.placeholder.com/150',
+        price: 29.99),
+    // Add more products here
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Products'),
+      ),
+      body: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          return ProductCard(product: products[index]);
+        },
+      ),
+    );
+  }
+}
+
+class ProductCard extends StatelessWidget {
+  final Product product;
+
+  ProductCard({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        children: [
+          Image.network(product.imageUrl),
+          Text(product.name),
+          Text('\$${product.price.toStringAsFixed(2)}'),
+        ],
+      ),
+    );
+  }
+}
